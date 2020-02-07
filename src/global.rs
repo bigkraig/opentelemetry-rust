@@ -41,6 +41,11 @@ impl api::Span for BoxedSpan {
     }
 
     /// Delegates to inner span.
+    fn get_name(&self) -> String {
+        self.0.get_name()
+    }
+
+    /// Delegates to inner span.
     fn end(&mut self) {
         self.0.end()
     }

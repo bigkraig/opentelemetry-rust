@@ -77,6 +77,11 @@ impl api::Span for NoopSpan {
         // Ignored
     }
 
+    /// Returns an empty String.
+    fn get_name(&self) -> String {
+        String::new()
+    }
+
     /// Ignores `Span` endings.
     fn end(&mut self) {
         // Ignored

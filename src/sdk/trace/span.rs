@@ -122,6 +122,13 @@ impl api::Span for Span {
         });
     }
 
+    /// Returns the `Span`'s name.
+    fn get_name(&self) -> String {
+        self.with_data(|data| {
+            data.name.clone()
+        }).unwrap_or_default()
+    }
+
     /// Finishes the span.
     fn end(&mut self) {
         self.with_data_mut(|data| {
