@@ -204,7 +204,8 @@
 //!
 //#![deny(missing_docs, unreachable_pub, missing_debug_implementations)]
 // GREG HACK - TODO - put the docs back in when tidy up clock.rs
-#![deny(unreachable_pub, missing_debug_implementations)]
+// ... and unreachable pub
+#![deny(missing_debug_implementations)]
 #![cfg_attr(test, deny(warnings))]
 
 pub mod api;

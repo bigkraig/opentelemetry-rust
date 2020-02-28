@@ -33,7 +33,7 @@ metrics = ["prometheus"]
 serialize = ["serde", "bincode"]
 
 [target.'cfg(windows)'.dependencies]
-winapi = { version = "0.3", features = ["sysinfoapi", "minwindef"] }
+winapi = { version = "0.3", features = ["impl-default", "sysinfoapi", "minwindef"] }
 
 [workspace]
 members = [
