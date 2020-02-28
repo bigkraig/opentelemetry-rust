@@ -7,13 +7,12 @@
 //! and exposes methods for creating and activating new `Spans`.
 //!
 //! Docs: https://github.com/open-telemetry/opentelemetry-specification/blob/master/specification/api-tracing.md#tracer
-use crate::api::Span;
+use crate::api::{Span, TimeStamp};
 use crate::sdk;
 use crate::{api, exporter};
 use std::cell::RefCell;
 use std::collections::HashSet;
 use std::sync::Arc;
-use std::time::SystemTime;
 
 /// `Tracer` implementation to create and manage spans
 #[derive(Clone, Debug)]
@@ -152,8 +151,8 @@ impl api::Tracer for Tracer {
                 parent_span_id,
                 span_kind,
                 name: name.to_string(),
-                start_time: SystemTime::now(),
-                end_time: SystemTime::now(),
+                start_time: TimeStamp::now(),
+                end_time: TimeStamp::now(),
                 attributes,
                 message_events: sdk::EvictedQueue::new(config.max_events_per_span),
                 links,

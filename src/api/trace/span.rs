@@ -15,10 +15,9 @@
 //! Vendors may implement the `Span` interface to effect vendor-specific logic. However, alternative
 //! implementations MUST NOT allow callers to create Spans directly. All `Span`s MUST be created
 //! via a Tracer.
-use crate::api;
+use crate::api::{self, TimeStamp};
 #[cfg(feature = "serialize")]
 use serde::{Deserialize, Serialize};
-use std::time::SystemTime;
 
 /// Interface for a single operation within a trace.
 pub trait Span: Send + Sync + std::fmt::Debug {
@@ -34,7 +33,7 @@ pub trait Span: Send + Sync + std::fmt::Debug {
     /// keys"](https://github.com/open-telemetry/opentelemetry-specification/blob/master/specification/data-semantic-conventions.md)
     /// which have prescribed semantic meanings.
     fn add_event(&mut self, message: String) {
-        self.add_event_with_timestamp(message, SystemTime::now())
+        self.add_event_with_timestamp(message, TimeStamp::now())
     }
 
     /// An API to record events at a specific time in the context of a given `Span`.
@@ -45,7 +44,7 @@ pub trait Span: Send + Sync + std::fmt::Debug {
     /// Note that the OpenTelemetry project documents certain ["standard event names and
     /// keys"](https://github.com/open-telemetry/opentelemetry-specification/blob/master/specification/data-semantic-conventions.md)
     /// which have prescribed semantic meanings.
-    fn add_event_with_timestamp(&mut self, message: String, timestamp: SystemTime);
+    fn add_event_with_timestamp(&mut self, message: String, timestamp: TimeStamp);
 
     /// Returns the `SpanContext` for the given `Span`. The returned value may be used even after
     /// the `Span is finished. The returned value MUST be the same for the entire `Span` lifetime.

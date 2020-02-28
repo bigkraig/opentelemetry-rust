@@ -32,6 +32,9 @@ trace = ["rand", "pin-project"]
 metrics = ["prometheus"]
 serialize = ["serde", "bincode"]
 
+[target.'cfg(windows)'.dependencies]
+winapi = { version = "0.3", features = ["sysinfoapi", "minwindef"] }
+
 [workspace]
 members = [
     "opentelemetry-jaeger",

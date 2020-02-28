@@ -8,11 +8,10 @@
 //! start time is set to the current time on span creation. After the `Span` is created, it
 //! is possible to change its name, set its `Attributes`, and add `Links` and `Events`.
 //! These cannot be changed after the `Span`'s end time has been set.
-use crate::api::Tracer;
+use crate::api::{TimeStamp, Tracer};
 use crate::{api, exporter, sdk};
 use std::any::Any;
 use std::sync::{Arc, Mutex};
-use std::time::SystemTime;
 
 /// Single operation within a trace.
 #[derive(Clone, Debug)]
@@ -77,7 +76,7 @@ impl api::Span for Span {
     /// Note that the OpenTelemetry project documents certain ["standard event names and
     /// keys"](https://github.com/open-telemetry/opentelemetry-specification/blob/master/specification/data-semantic-conventions.md)
     /// which have prescribed semantic meanings.
-    fn add_event_with_timestamp(&mut self, message: String, timestamp: SystemTime) {
+    fn add_event_with_timestamp(&mut self, message: String, timestamp: TimeStamp) {
         self.with_data_mut(|data| {
             data.message_events
                 .push_front(api::Event { message, timestamp })
@@ -132,7 +131,7 @@ impl api::Span for Span {
     /// Finishes the span.
     fn end(&mut self) {
         self.with_data_mut(|data| {
-            data.end_time = SystemTime::now();
+            data.end_time = TimeStamp::now();
         });
     }
 
@@ -158,7 +157,7 @@ impl Drop for SpanInner {
         if let Some(data) = self.data.take() {
             if let Ok(mut inner) = data.lock() {
                 if inner.end_time == inner.start_time {
-                    inner.end_time = SystemTime::now();
+                    inner.end_time = TimeStamp::now();
                 }
                 let exportable_span = Arc::new(inner.clone());
                 for processor in self.tracer.provider().span_processors() {
