@@ -3,7 +3,6 @@ use crate::{api, sdk};
 #[cfg(feature = "serialize")]
 use serde::{Deserialize, Serialize};
 use std::sync::Arc;
-use std::time::SystemTime;
 
 /// Describes the result of an export.
 #[derive(Debug)]
@@ -71,9 +70,9 @@ pub struct SpanData {
     /// Span name
     pub name: String,
     /// Span start time
-    pub start_time: SystemTime,
+    pub start_time: api::TimeStamp,
     /// Span end time
-    pub end_time: SystemTime,
+    pub end_time: api::TimeStamp,
     /// Span attributes
     pub attributes: sdk::EvictedQueue<api::KeyValue>,
     /// Span Message events
@@ -101,8 +100,8 @@ mod tests {
         let parent_span_id = 1;
         let span_kind = api::SpanKind::Client;
         let name = "foo/bar baz 人?!".to_string();
-        let start_time = SystemTime::now();
-        let end_time = SystemTime::now();
+        let start_time = api::TimeStamp::now();
+        let end_time = api::TimeStamp::now();
 
         let capacity = 3;
         let attributes = sdk::EvictedQueue::new(capacity);

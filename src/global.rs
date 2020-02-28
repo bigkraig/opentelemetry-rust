@@ -1,8 +1,7 @@
 //! OpenTelemetry global `Tracer` and `Meter` singletons.
-use crate::api::{self, KeyValue, SpanContext, Tracer};
+use crate::api::{self, KeyValue, SpanContext, Tracer, TimeStamp};
 use std::any::Any;
 use std::sync::{Arc, RwLock};
-use std::time::SystemTime;
 
 /// Boxed span wraps a generic trait object so that `BoxedTracer`s
 /// can return whichever type of span they were configured to use.
@@ -11,7 +10,7 @@ pub struct BoxedSpan(Box<dyn api::Span>);
 
 impl api::Span for BoxedSpan {
     /// Delegates to inner span.0
-    fn add_event_with_timestamp(&mut self, message: String, timestamp: SystemTime) {
+    fn add_event_with_timestamp(&mut self, message: String, timestamp: TimeStamp) {
         self.0.add_event_with_timestamp(message, timestamp)
     }
 

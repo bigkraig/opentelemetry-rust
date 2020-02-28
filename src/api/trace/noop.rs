@@ -5,7 +5,6 @@
 //! to have minimal resource utilization and runtime impact.
 use crate::api;
 use std::any::Any;
-use std::time::SystemTime;
 
 /// A no-op instance of a `Provider`.
 #[derive(Debug)]
@@ -48,7 +47,7 @@ impl api::Span for NoopSpan {
     }
 
     /// Ignores all events with timestamps
-    fn add_event_with_timestamp(&mut self, _message: String, _timestamp: SystemTime) {
+    fn add_event_with_timestamp(&mut self, _message: String, _timestamp: api::TimeStamp) {
         // Ignored
     }
 

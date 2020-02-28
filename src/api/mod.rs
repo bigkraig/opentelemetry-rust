@@ -18,7 +18,7 @@ pub mod metrics;
 pub mod propagation;
 pub mod trace;
 
-pub use self::core::{Key, KeyValue, Unit, Value};
+pub use self::core::{Key, KeyValue, Unit, Value, TimeStamp};
 pub use metrics::{
     counter::{Counter, CounterHandle},
     gauge::{Gauge, GaugeHandle},
