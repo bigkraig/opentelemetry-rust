@@ -106,7 +106,7 @@ use opentelemetry::{api, exporter::trace, sdk};
 use std::sync::{Arc, Mutex};
 use std::{
     any, net,
-    time::{Duration, SystemTime},
+    time::Duration,
 };
 
 /// Default service name if no service is configured.
@@ -311,7 +311,7 @@ impl Into<jaeger::Log> for api::Event {
     fn into(self) -> jaeger::Log {
         let timestamp = self
             .timestamp
-            .duration_since(SystemTime::UNIX_EPOCH)
+            .duration_since(api::TimeStamp::UNIX_EPOCH)
             .unwrap_or_else(|_| Duration::from_secs(0))
             .as_micros() as i64;
         jaeger::Log::new(
@@ -345,7 +345,7 @@ impl Into<jaeger::Span> for Arc<trace::SpanData> {
             flags: self.context.trace_flags() as i32,
             start_time: self
                 .start_time
-                .duration_since(SystemTime::UNIX_EPOCH)
+                .duration_since(api::TimeStamp::UNIX_EPOCH)
                 .unwrap_or_else(|_| Duration::from_secs(0))
                 .as_micros() as i64,
             duration: self
