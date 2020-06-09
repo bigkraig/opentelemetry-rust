@@ -172,6 +172,7 @@ mod tests {
         fn set_attribute(&self, _attribute: api::KeyValue) {}
         fn set_status(&self, _code: api::StatusCode, _message: String) {}
         fn update_name(&self, _new_name: String) {}
+        fn get_name(&self) -> String { String::new() }
         fn end(&self) {}
     }
 

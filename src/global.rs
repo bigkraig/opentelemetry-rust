@@ -126,6 +126,9 @@ impl api::Span for BoxedSpan {
         self.0.update_name(new_name)
     }
 
+    /// Gets the `Span`'s name.
+    fn get_name(&self) -> String { self.0.get_name() }
+
     /// Finishes the span.
     fn end(&self) {
         self.0.end()

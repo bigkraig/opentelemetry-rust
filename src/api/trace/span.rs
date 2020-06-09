@@ -111,6 +111,9 @@ pub trait Span: fmt::Debug + 'static + Send + Sync {
     /// filtering decisions made previously depending on the implementation.
     fn update_name(&self, new_name: String);
 
+    /// Returns the name of the `Span`.
+    fn get_name(&self) -> String;
+
     /// Finishes the `Span`.
     ///
     /// Implementations MUST ignore all subsequent calls to `end` (there might be

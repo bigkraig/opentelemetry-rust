@@ -87,6 +87,9 @@ impl api::Span for NoopSpan {
         // Ignored
     }
 
+    /// Returns an empty string, there is no name
+    fn get_name(&self) -> String { String::new() }
+
     /// Ignores `Span` endings.
     fn end(&self) {
         // Ignored
